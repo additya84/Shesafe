@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Shield, Zap, Users, MapPin, Heart, Phone, Alarm, Clock } from "lucide-react"
+import { Shield, Zap, Users, MapPin, Heart, Phone, AlertCircle } from "lucide-react"
 
 export default function FAQ() {
   const questions = [

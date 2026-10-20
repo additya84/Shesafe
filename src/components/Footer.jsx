@@ -1,5 +1,5 @@
 import React from "react"
-import { Instagram, LinkedIn, X } from "lucide-react"
+import { X } from "lucide-react"
 
 export default function Footer() {
   return (
@@ -8,7 +8,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 gap-12 md:grid-cols-3 mb-16">
           <div className="md:col-span-2">
             <div className="flex items-center gap-2 mb-6">
-              <ShieldHeart
+              <Shield
                 className="w-8 h-8 text-primary DEFAULT"
                 width={24}
                 height={24}
@@ -53,8 +53,7 @@ export default function Footer() {
           <p className="text-white/50 text-sm">© 2026 SheSafe. All rights reserved.</p>
 
           <div className="flex gap-4">
-            <Instagram className="w-5 h-5 text-white/50 hover:text-pink-400 transition-colour" />
-            <LinkedIn className="w-5 h-5 text-white/50 hover:text-blue-400 transition-colour" />
+            <span className="text-white/50 text-xs">Designed for safer moments</span>
             <X className="w-5 h-5 text-white/50 hover:text-black transition-colour" />
           </div>
         </div>

@@ -1,5 +1,5 @@
 import React from "react"
-import { Shield, Zap, MapPin, Heart, Phone, Alarm, Clock } from "lucide-react"
+import { Shield, Zap, MapPin, Heart, Phone, AlertCircle, Clock } from "lucide-react"
 
 export default function AppPreview() {
   return (

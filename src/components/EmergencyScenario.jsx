@@ -1,5 +1,5 @@
 import React from "react"
-import { Shield, Zap, Clock, MapPin, Users, AlertCircle, Sound } from "lucide-react"
+import { Shield, Zap, Clock, MapPin, Users, AlertCircle } from "lucide-react"
 
 export default function EmergencyScenario() {
   const workflowSteps = [

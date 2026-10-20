@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
-import { ShieldHeart } from "lucide-react"
+import { Shield, Heart } from "lucide-react"
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -27,11 +27,12 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <ShieldHeart
-            className="w-8 h-8 text-primary DEFAULT"
+<Shield
+            className="w-8 h-8 text-primary-DEFAULT"
             width={24}
             height={24}
           />
+          <Heart className="w-8 h-8 text-primary-DEFAULT mx-1" />
           <span className="text-primary-dark font-bold text-xl">SheSafe</span>
         </div>
 
