@@ -1,10 +1,27 @@
 import React, { useState } from "react"
-import { Shield, MapPin, Phone, BellRing, Clock, Users, Volume2, CheckCircle, BatteryMedium, AlertTriangle } from "lucide-react"
+import { useSafety } from "../context/SafetyContext"
+import { Shield, MapPin, Phone, BellRing, Clock, Users, Volume2, VolumeX, CheckCircle, BatteryMedium, AlertTriangle, PhoneCall } from "lucide-react"
 
 export default function AppPreview() {
-  const [activeTab, setActiveTab] = useState("dashboard")
-  const [alarmActive, setAlarmActive] = useState(false)
+  const {
+    guardians,
+    isSirenPlaying,
+    toggleSiren,
+    location,
+    fetchLocation,
+    openCallModal,
+  } = useSafety()
+
   const [gpsShared, setGpsShared] = useState(true)
+
+  const handleToggleGps = () => {
+    if (!gpsShared) {
+      fetchLocation()
+      setGpsShared(true)
+    } else {
+      setGpsShared(false)
+    }
+  }
 
   return (
     <section id="preview" className="py-24 bg-slate-50 relative overflow-hidden">
@@ -62,19 +79,19 @@ export default function AppPreview() {
                     </h4>
                     
                     <button
-                      onClick={() => setAlarmActive(!alarmActive)}
+                      onClick={toggleSiren}
                       className={`w-full py-3 px-4 rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer shadow-sm ${
-                        alarmActive
+                        isSirenPlaying
                           ? "bg-rose-600 text-white animate-pulse"
                           : "bg-white text-slate-800 border border-slate-200 hover:border-purple-300"
                       }`}
                     >
-                      <Volume2 className="w-4 h-4 text-rose-500" />
-                      <span>{alarmActive ? "Siren Sounding (Stop)" : "Sound Loud Siren"}</span>
+                      {isSirenPlaying ? <VolumeX className="w-4 h-4 text-white" /> : <Volume2 className="w-4 h-4 text-rose-500" />}
+                      <span>{isSirenPlaying ? "Siren Sounding (Stop)" : "Play Live Siren"}</span>
                     </button>
 
                     <button
-                      onClick={() => setGpsShared(!gpsShared)}
+                      onClick={handleToggleGps}
                       className={`w-full mt-2 py-3 px-4 rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer shadow-sm ${
                         gpsShared
                           ? "bg-purple-600 text-white"
@@ -85,17 +102,13 @@ export default function AppPreview() {
                       <span>{gpsShared ? "GPS Broadcast: Active" : "Enable GPS Sharing"}</span>
                     </button>
 
-                    <a
-                      href="tel:911"
-                      onClick={(e) => {
-                        e.preventDefault()
-                        alert("Emergency Call Simulation: In the mobile app, this will dial your local emergency service (e.g. 911/112).")
-                      }}
+                    <button
+                      onClick={openCallModal}
                       className="w-full mt-2 py-3 px-4 rounded-xl font-bold text-xs bg-emerald-600 hover:bg-emerald-700 text-white flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-sm"
                     >
-                      <Phone className="w-4 h-4" />
-                      <span>Emergency Call (911)</span>
-                    </a>
+                      <PhoneCall className="w-4 h-4" />
+                      <span>One-Tap Speed Dial</span>
+                    </button>
                   </div>
 
                   {/* System Status info */}
@@ -109,8 +122,8 @@ export default function AppPreview() {
                       <span className="font-semibold text-emerald-600">SMS Enabled</span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-slate-500">Safe Timer:</span>
-                      <span className="font-semibold text-slate-800">Standby</span>
+                      <span className="text-slate-500">Guardians Synced:</span>
+                      <span className="font-semibold text-slate-800">{guardians.length} Contacts</span>
                     </div>
                   </div>
                 </div>
@@ -136,7 +149,7 @@ export default function AppPreview() {
                         </div>
                       </div>
                       <div className="mt-2 bg-white/95 backdrop-blur-sm px-3 py-1 rounded-full shadow-md text-[11px] font-bold text-slate-800 border border-slate-200">
-                        Current Location • Central Park Ave
+                        GPS Fix: {location.latitude}, {location.longitude}
                       </div>
                     </div>
 
@@ -152,33 +165,21 @@ export default function AppPreview() {
                     <div className="flex items-center justify-between mb-3">
                       <h4 className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
                         <Users className="w-4 h-4 text-purple-600" />
-                        <span>Guardian Status Updates</span>
+                        <span>Guardian Circle Status</span>
                       </h4>
-                      <span className="text-[11px] text-slate-500 font-medium">All 3 Synced</span>
+                      <span className="text-[11px] text-slate-500 font-medium">All {guardians.length} Synced</span>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                      <div className="bg-white p-3 rounded-xl border border-slate-200/80 shadow-2xs">
-                        <p className="text-xs font-bold text-slate-800">Mom</p>
-                        <p className="text-[10px] text-emerald-600 flex items-center gap-1 mt-0.5">
-                          <CheckCircle className="w-3 h-3" />
-                          <span>Connected • 1.2 mi</span>
-                        </p>
-                      </div>
-                      <div className="bg-white p-3 rounded-xl border border-slate-200/80 shadow-2xs">
-                        <p className="text-xs font-bold text-slate-800">Dad</p>
-                        <p className="text-[10px] text-emerald-600 flex items-center gap-1 mt-0.5">
-                          <CheckCircle className="w-3 h-3" />
-                          <span>Connected • 3.4 mi</span>
-                        </p>
-                      </div>
-                      <div className="bg-white p-3 rounded-xl border border-slate-200/80 shadow-2xs">
-                        <p className="text-xs font-bold text-slate-800">Jessica</p>
-                        <p className="text-[10px] text-emerald-600 flex items-center gap-1 mt-0.5">
-                          <CheckCircle className="w-3 h-3" />
-                          <span>Connected • 0.5 mi</span>
-                        </p>
-                      </div>
+                      {guardians.slice(0, 3).map((g) => (
+                        <div key={g.id} className="bg-white p-3 rounded-xl border border-slate-200/80 shadow-2xs">
+                          <p className="text-xs font-bold text-slate-800">{g.name}</p>
+                          <p className="text-[10px] text-emerald-600 flex items-center gap-1 mt-0.5">
+                            <CheckCircle className="w-3 h-3" />
+                            <span>Connected • {g.relation}</span>
+                          </p>
+                        </div>
+                      ))}
                     </div>
                   </div>
 
@@ -191,7 +192,7 @@ export default function AppPreview() {
             <div className="bg-purple-50/80 px-6 py-3 border-t border-purple-100 flex flex-wrap items-center justify-between text-xs text-slate-600">
               <span className="flex items-center gap-1.5 font-medium">
                 <Clock className="w-3.5 h-3.5 text-purple-600" />
-                <span>Last location sync: Just now</span>
+                <span>Last GPS sync: {location.timestamp}</span>
               </span>
               <span className="text-purple-700 font-semibold">
                 Safety Dashboard Preview • Web & Mobile Synchronized

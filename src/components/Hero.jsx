@@ -1,29 +1,18 @@
-import React, { useState } from "react"
+import React from "react"
 import { Link } from "react-router-dom"
+import { useSafety } from "../context/SafetyContext"
 import { Shield, AlertCircle, Heart, MapPin, Users, PhoneCall, Check, BellRing } from "lucide-react"
 
 export default function Hero() {
-  const [sosActive, setSosActive] = useState(false)
-  const [sosCountdown, setSosCountdown] = useState(null)
-
-  const triggerSosDemo = () => {
-    if (sosActive) {
-      setSosActive(false)
-      setSosCountdown(null)
-      return
-    }
-    setSosCountdown(3)
-    const interval = setInterval(() => {
-      setSosCountdown((prev) => {
-        if (prev === 1) {
-          clearInterval(interval)
-          setSosActive(true)
-          return null
-        }
-        return prev ? prev - 1 : null
-      })
-    }, 800)
-  }
+  const {
+    isSosActive,
+    countdown,
+    startSos,
+    cancelSos,
+    guardians,
+    openCallModal,
+    location,
+  } = useSafety()
 
   return (
     <section className="relative pt-32 pb-20 lg:pt-36 lg:pb-28 overflow-hidden bg-gradient-to-b from-purple-50/70 via-white to-slate-50">
@@ -59,12 +48,13 @@ export default function Hero() {
               >
                 Set Up Free Protection
               </Link>
-              <a
-                href="#how-it-works"
-                className="inline-flex items-center justify-center px-7 py-3.5 rounded-full text-base font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-200 shadow-sm hover:border-purple-300 transition-all cursor-pointer"
+              <button
+                onClick={openCallModal}
+                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full text-base font-semibold text-rose-700 bg-rose-50 hover:bg-rose-100 border border-rose-200 shadow-sm transition-all cursor-pointer"
               >
-                See How It Works
-              </a>
+                <PhoneCall className="w-4 h-4 text-rose-600" />
+                <span>Emergency Speed Dial</span>
+              </button>
             </div>
 
             {/* Trust feature pills */}
@@ -112,11 +102,11 @@ export default function Hero() {
                         </div>
                       </div>
                       <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                        sosActive 
+                        isSosActive 
                           ? "bg-rose-100 text-rose-700 animate-pulse" 
                           : "bg-emerald-100 text-emerald-700"
                       }`}>
-                        {sosActive ? "EMERGENCY ACTIVE" : "SHIELD ONLINE"}
+                        {isSosActive ? "EMERGENCY ACTIVE" : "SHIELD ONLINE"}
                       </span>
                     </div>
 
@@ -127,12 +117,18 @@ export default function Hero() {
                           <Users className="w-3.5 h-3.5 text-purple-600" />
                           Emergency Circle
                         </span>
-                        <span className="text-[11px] text-purple-700 font-bold">3 Ready</span>
+                        <span className="text-[11px] text-purple-700 font-bold">{guardians.length} Ready</span>
                       </div>
                       <div className="flex -space-x-2">
-                        <div className="w-7 h-7 rounded-full bg-purple-600 text-white text-[11px] font-bold flex items-center justify-center border-2 border-white">M</div>
-                        <div className="w-7 h-7 rounded-full bg-pink-500 text-white text-[11px] font-bold flex items-center justify-center border-2 border-white">D</div>
-                        <div className="w-7 h-7 rounded-full bg-indigo-500 text-white text-[11px] font-bold flex items-center justify-center border-2 border-white">S</div>
+                        {guardians.slice(0, 4).map((g) => (
+                          <div
+                            key={g.id}
+                            className={`w-7 h-7 rounded-full ${g.color} text-white text-[11px] font-bold flex items-center justify-center border-2 border-white`}
+                            title={g.name}
+                          >
+                            {g.initial}
+                          </div>
+                        ))}
                       </div>
                     </div>
 
@@ -140,7 +136,9 @@ export default function Hero() {
                     <div className="bg-purple-50/80 rounded-xl p-2.5 flex items-center gap-2 text-xs text-slate-700 border border-purple-100">
                       <MapPin className="w-4 h-4 text-purple-600 flex-shrink-0" />
                       <span className="truncate text-[11px]">
-                        {sosActive ? "Broadcasting live GPS to contacts..." : "GPS ready for emergency broadcast"}
+                        {isSosActive
+                          ? `Broadcasting GPS: ${location.latitude}, ${location.longitude}`
+                          : `GPS: ${location.latitude}, ${location.longitude}`}
                       </span>
                     </div>
                   </div>
@@ -148,25 +146,25 @@ export default function Hero() {
                   {/* Big Interactive SOS Trigger in mockup */}
                   <div className="my-6 text-center">
                     <button
-                      onClick={triggerSosDemo}
+                      onClick={isSosActive ? cancelSos : startSos}
                       className={`relative w-32 h-32 rounded-full mx-auto flex flex-col items-center justify-center shadow-xl transition-all transform active:scale-95 cursor-pointer ${
-                        sosActive
+                        isSosActive
                           ? "bg-rose-600 text-white ring-8 ring-rose-200 animate-pulse"
-                          : sosCountdown !== null
+                          : countdown !== null
                           ? "bg-amber-500 text-white ring-8 ring-amber-200"
                           : "bg-gradient-to-tr from-purple-600 via-purple-700 to-pink-600 text-white ring-8 ring-purple-100 hover:ring-purple-200"
                       }`}
                     >
-                      {sosCountdown !== null ? (
+                      {countdown !== null ? (
                         <>
-                          <span className="text-3xl font-black">{sosCountdown}</span>
-                          <span className="text-[10px] uppercase font-bold tracking-wider">Tap to cancel</span>
+                          <span className="text-3xl font-black">{countdown}</span>
+                          <span className="text-[10px] uppercase font-bold tracking-wider">Cancel</span>
                         </>
-                      ) : sosActive ? (
+                      ) : isSosActive ? (
                         <>
                           <BellRing className="w-8 h-8 animate-bounce mb-1" />
                           <span className="text-sm font-black tracking-wider">ACTIVE</span>
-                          <span className="text-[9px] opacity-90">Tap to stop</span>
+                          <span className="text-[9px] opacity-90">Stop Alarm</span>
                         </>
                       ) : (
                         <>
@@ -177,22 +175,28 @@ export default function Hero() {
                       )}
                     </button>
                     <p className="text-[11px] text-slate-500 mt-3 font-medium">
-                      {sosActive
-                        ? "🚨 Emergency triggered in demo mode"
-                        : "Click button to test emergency simulation"}
+                      {isSosActive
+                        ? "🚨 Emergency protocol actively sounding!"
+                        : "Click button to test live emergency siren"}
                     </p>
                   </div>
 
                   {/* Mockup bottom quick actions */}
                   <div className="grid grid-cols-2 gap-2 text-center">
-                    <div className="bg-white p-2 rounded-xl border border-slate-200 shadow-2xs">
-                      <PhoneCall className="w-3.5 h-3.5 text-emerald-600 mx-auto mb-1" />
+                    <button
+                      onClick={openCallModal}
+                      className="bg-white hover:bg-rose-50 p-2 rounded-xl border border-slate-200 shadow-2xs transition-colors cursor-pointer"
+                    >
+                      <PhoneCall className="w-3.5 h-3.5 text-rose-600 mx-auto mb-1" />
                       <span className="text-[10px] font-bold text-slate-700 block">Speed Dial</span>
-                    </div>
-                    <div className="bg-white p-2 rounded-xl border border-slate-200 shadow-2xs">
+                    </button>
+                    <Link
+                      to="/register"
+                      className="bg-white hover:bg-purple-50 p-2 rounded-xl border border-slate-200 shadow-2xs transition-colors cursor-pointer block"
+                    >
                       <Heart className="w-3.5 h-3.5 text-pink-500 mx-auto mb-1" />
-                      <span className="text-[10px] font-bold text-slate-700 block">Check-In</span>
-                    </div>
+                      <span className="text-[10px] font-bold text-slate-700 block">Sign Up</span>
+                    </Link>
                   </div>
 
                 </div>
