@@ -1,6 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import { Shield, Heart, MapPin, Phone, Mail, WhatsApp } from "lucide-react"
+import { Shield, Heart, MapPin, Phone, Mail, MessageCircle } from "lucide-react"
 
 export default function Footer() {
   return (
@@ -9,7 +9,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-slate-800">
           
           {/* Brand info */}
-          <div class="lg:col-span-2 space-y-4">
+          <div className="lg:col-span-2 space-y-4">
             <Link to="/" className="flex items-center gap-2">
               <div className="w-9 h-9 rounded-xl bg-purple-600 flex items-center justify-center text-white">
                 <Shield className="w-5 h-5" />
@@ -51,18 +51,18 @@ export default function Footer() {
               <li><a href="/#faq" className="hover:text-purple-400 transition-colors">Frequently Asked</a></li>
               <li>
                 <a
-                  href="tel:+91-112"
+                  href="tel:112"
                   className="hover:text-purple-400 transition-colors"
                 >
-                  Emergency 112 (India)
+                  Emergency 112 (Police/Med)
                 </a>
               </li>
               <li>
                 <a
-                  href="tel:+91-1800-110-110"
+                  href="tel:1091"
                   className="hover:text-purple-400 transition-colors"
                 >
-                  Women's Helpline
+                  Women's Helpline (1091)
                 </a>
               </li>
               <li><a href="/#privacy" className="hover:text-purple-400 transition-colors">Privacy Standards</a></li>
@@ -75,22 +75,22 @@ export default function Footer() {
             <ul className="space-y-2.5 text-sm">
               <li>
                 <a
-                  href="https://wa.me/919876543210"
+                  href="https://api.whatsapp.com/send?text=SheSafe%20Emergency%20App"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-purple-400 transition-colors"
+                  className="hover:text-purple-400 transition-colors inline-flex items-center gap-1.5"
                 >
-                  <WhatsApp className="w-4 h-4 me-2 align-middle" />
-                  Chat on WhatsApp
+                  <MessageCircle className="w-4 h-4 text-emerald-400" />
+                  <span>Chat on WhatsApp</span>
                 </a>
               </li>
               <li>
                 <a
-                  href="mailto:support@safeshe.in"
-                  className="hover:text-purple-400 transition-colors"
+                  href="mailto:support@shesafe.app"
+                  className="hover:text-purple-400 transition-colors inline-flex items-center gap-1.5"
                 >
-                  <Mail className="w-4 h-4 me-2 align-middle" />
-                  support@safeshe.in
+                  <Mail className="w-4 h-4" />
+                  <span>support@shesafe.app</span>
                 </a>
               </li>
             </ul>
