@@ -1,101 +1,206 @@
-import React from "react"
-import { Shield, Zap, MapPin, Heart, Phone, AlertCircle, Clock } from "lucide-react"
+import React, { useState } from "react"
+import { Shield, MapPin, Phone, BellRing, Clock, Users, Volume2, CheckCircle, BatteryMedium, AlertTriangle } from "lucide-react"
 
 export default function AppPreview() {
+  const [activeTab, setActiveTab] = useState("dashboard")
+  const [alarmActive, setAlarmActive] = useState(false)
+  const [gpsShared, setGpsShared] = useState(true)
+
   return (
-    <section className="py-24 bg-gray-very-light">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-charcoal-dark mb-4">
-            A safety dashboard designed around you.
+    <section id="preview" className="py-24 bg-slate-50 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-100 text-purple-900 text-xs font-bold uppercase tracking-wider">
+            Interactive Experience
+          </div>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 font-outfit tracking-tight">
+            A safety dashboard designed around clarity.
           </h2>
-          <p className="text-lg text-charcoal-dark/60 max-w-2xl mx-auto">
-            Take a look at the SheSafe emergency dashboard designed to keep you informed.
+          <p className="text-base sm:text-lg text-slate-600 leading-relaxed">
+            In an emergency, every interface element must be unambiguous and immediate. Test out the SheSafe safety command center preview below.
           </p>
         </div>
 
-        <div className="relative">
-          {/* Dashboard mockup */}
-          <div className="relative w-full max-w-2xl mx-auto bg-white rounded-2xl overflow-shadow shadow-lg">
-            {/* Header area */}
-            <div className="bg-primary-dark text-white p-6">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <Shield className="w-6 h-6 text-white" />
-                  <span className="text-lg font-semibold">SheSafe</span>
+        {/* Mockup Dashboard Container */}
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-white rounded-3xl shadow-2xl shadow-purple-900/10 border border-purple-100 overflow-hidden">
+            
+            {/* Top Navigation Bar of Dashboard */}
+            <div className="bg-slate-900 text-white px-6 py-4 flex flex-wrap items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-xl bg-purple-600 flex items-center justify-center">
+                  <Shield className="w-5 h-5 text-white" />
                 </div>
-
-                <div className="flex items-center gap-2">
-                  <span className="text-sm bg-lavender-light text-primary px-2 py-1 rounded">Active</span>
-                  <span className="text-xs text-white/60">Safety</span>
-                </div>
-              </div>
-
-              {/* SOS button */}
-              <div className="mt-4 pt-4 border-t border-white/10">
-                <button
-                  className="w-full h-14 bg-primary text-white rounded-full flex items-center justify-center font-medium hover:opacity-90 transition-opacity"
-                  aria-label="Emergency SOS"
-                >
-                  SOS
-                </button>
-              </div>
-            </div>
-
-            {/* Main dashboard content */}
-            <div className="p-6">
-              {/* Location */}
-              <div className="mb-6">
-                <div className="flex items-center gap-3 text-sm text-charcoal-dark/60">
-                  <MapPin className="w-5 h-5" />
-                  <span>Last shared: Just now</span>
-                </div>
-                <p className="mt-1 text-xs text-charcoal-dark">Sharing location during emergency</p>
-              </div>
-
-              {/* Guardians */}
-              <div className="mb-6">
-                <div className="flex items-center gap-3 text-sm text-charcoal-dark/60">
-                  <Users className="w-5 h-5" />
-                  <span>3 guardians notified</span>
+                <div>
+                  <h3 className="text-base font-bold font-outfit">SheSafe Command Hub</h3>
+                  <p className="text-[11px] text-slate-400">User: Maya Johnson • Safety Shield Active</p>
                 </div>
               </div>
 
-              {/* Emergency call */}
-              <div className="mb-6">
-                <div className="flex items-center gap-3 text-sm text-charcoal-dark/60">
-                  <Phone className="w-5 h-5" />
-                  <span>Call 911</span>
+              <div className="flex items-center gap-3 text-xs">
+                <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-800 text-slate-300 border border-slate-700">
+                  <BatteryMedium className="w-4 h-4 text-emerald-400" />
+                  <span>88% Battery</span>
                 </div>
-              </div>
-
-              {/* Alarm */}
-              <div className="mb-6">
-                <div className="flex items-center gap-3 text-sm text-charcoal-dark/60">
-                  <Alarm className="w-5 h-5" />
-                  <span>Loud alarm</span>
-                </div>
-              </div>
-
-              {/* SOS history */}
-              <div>
-                <div className="flex items-center gap-3 text-sm text-charcoal-dark/60">
-                  <Clock className="w-5 h-5" />
-                  <span>SOS history</span>
+                <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <span>GPS Accurate (3m)</span>
                 </div>
               </div>
             </div>
 
-            {/* Footer label */}
-            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-xs text-charcoal-dark/60">
-              Dashboard Preview
+            {/* Main Dashboard Content */}
+            <div className="p-6 sm:p-8">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                {/* Left Widget: Emergency Quick Actions */}
+                <div className="md:col-span-1 space-y-4">
+                  <div className="bg-purple-50/70 rounded-2xl p-5 border border-purple-100">
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-purple-900 mb-3">
+                      Emergency Actions
+                    </h4>
+                    
+                    <button
+                      onClick={() => setAlarmActive(!alarmActive)}
+                      className={`w-full py-3 px-4 rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer shadow-sm ${
+                        alarmActive
+                          ? "bg-rose-600 text-white animate-pulse"
+                          : "bg-white text-slate-800 border border-slate-200 hover:border-purple-300"
+                      }`}
+                    >
+                      <Volume2 className="w-4 h-4 text-rose-500" />
+                      <span>{alarmActive ? "Siren Sounding (Stop)" : "Sound Loud Siren"}</span>
+                    </button>
+
+                    <button
+                      onClick={() => setGpsShared(!gpsShared)}
+                      className={`w-full mt-2 py-3 px-4 rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer shadow-sm ${
+                        gpsShared
+                          ? "bg-purple-600 text-white"
+                          : "bg-white text-slate-800 border border-slate-200"
+                      }`}
+                    >
+                      <MapPin className="w-4 h-4" />
+                      <span>{gpsShared ? "GPS Broadcast: Active" : "Enable GPS Sharing"}</span>
+                    </button>
+
+                    <a
+                      href="tel:911"
+                      onClick={(e) => {
+                        e.preventDefault()
+                        alert("Emergency Call Simulation: In the mobile app, this will dial your local emergency service (e.g. 911/112).")
+                      }}
+                      className="w-full mt-2 py-3 px-4 rounded-xl font-bold text-xs bg-emerald-600 hover:bg-emerald-700 text-white flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-sm"
+                    >
+                      <Phone className="w-4 h-4" />
+                      <span>Emergency Call (911)</span>
+                    </a>
+                  </div>
+
+                  {/* System Status info */}
+                  <div className="bg-slate-50 rounded-2xl p-4 border border-slate-200 text-xs text-slate-600 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-500">Emergency Protocol:</span>
+                      <span className="font-semibold text-slate-800">Ready</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-500">Offline Fallback:</span>
+                      <span className="font-semibold text-emerald-600">SMS Enabled</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-500">Safe Timer:</span>
+                      <span className="font-semibold text-slate-800">Standby</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Center & Right: Live Status & Simulation Map */}
+                <div className="md:col-span-2 space-y-6">
+                  
+                  {/* Simulated Map View */}
+                  <div className="relative bg-slate-100 rounded-2xl overflow-hidden border border-slate-200 h-64 flex items-center justify-center shadow-inner">
+                    {/* Simulated Map Background Grid */}
+                    <div className="absolute inset-0 opacity-30 bg-[radial-gradient(#9333ea_1px,transparent_1px)] [background-size:16px_16px]" />
+                    
+                    {/* Simulated Street overlay lines */}
+                    <div className="absolute inset-x-0 top-1/2 h-4 bg-slate-300/40 -translate-y-1/2 -rotate-6" />
+                    <div className="absolute inset-y-0 left-1/3 w-4 bg-slate-300/40" />
+
+                    {/* Pin showing user location */}
+                    <div className="relative z-10 flex flex-col items-center">
+                      <div className="relative flex items-center justify-center">
+                        <span className="absolute w-12 h-12 bg-purple-500/30 rounded-full animate-ping" />
+                        <div className="w-9 h-9 rounded-full bg-purple-600 text-white flex items-center justify-center shadow-lg border-2 border-white">
+                          <MapPin className="w-5 h-5" />
+                        </div>
+                      </div>
+                      <div className="mt-2 bg-white/95 backdrop-blur-sm px-3 py-1 rounded-full shadow-md text-[11px] font-bold text-slate-800 border border-slate-200">
+                        Current Location • Central Park Ave
+                      </div>
+                    </div>
+
+                    {/* Top right indicator */}
+                    <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-2.5 py-1 rounded-lg text-[10px] font-bold text-slate-700 shadow-sm border border-slate-200 flex items-center gap-1.5">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                      <span>Real-time GPS Lock</span>
+                    </div>
+                  </div>
+
+                  {/* Guardian Activity Log */}
+                  <div className="bg-slate-50 rounded-2xl p-5 border border-slate-200">
+                    <div className="flex items-center justify-between mb-3">
+                      <h4 className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+                        <Users className="w-4 h-4 text-purple-600" />
+                        <span>Guardian Status Updates</span>
+                      </h4>
+                      <span className="text-[11px] text-slate-500 font-medium">All 3 Synced</span>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                      <div className="bg-white p-3 rounded-xl border border-slate-200/80 shadow-2xs">
+                        <p className="text-xs font-bold text-slate-800">Mom</p>
+                        <p className="text-[10px] text-emerald-600 flex items-center gap-1 mt-0.5">
+                          <CheckCircle className="w-3 h-3" />
+                          <span>Connected • 1.2 mi</span>
+                        </p>
+                      </div>
+                      <div className="bg-white p-3 rounded-xl border border-slate-200/80 shadow-2xs">
+                        <p className="text-xs font-bold text-slate-800">Dad</p>
+                        <p className="text-[10px] text-emerald-600 flex items-center gap-1 mt-0.5">
+                          <CheckCircle className="w-3 h-3" />
+                          <span>Connected • 3.4 mi</span>
+                        </p>
+                      </div>
+                      <div className="bg-white p-3 rounded-xl border border-slate-200/80 shadow-2xs">
+                        <p className="text-xs font-bold text-slate-800">Jessica</p>
+                        <p className="text-[10px] text-emerald-600 flex items-center gap-1 mt-0.5">
+                          <CheckCircle className="w-3 h-3" />
+                          <span>Connected • 0.5 mi</span>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
             </div>
+
+            {/* Dashboard Footer Banner */}
+            <div className="bg-purple-50/80 px-6 py-3 border-t border-purple-100 flex flex-wrap items-center justify-between text-xs text-slate-600">
+              <span className="flex items-center gap-1.5 font-medium">
+                <Clock className="w-3.5 h-3.5 text-purple-600" />
+                <span>Last location sync: Just now</span>
+              </span>
+              <span className="text-purple-700 font-semibold">
+                Safety Dashboard Preview • Web & Mobile Synchronized
+              </span>
+            </div>
+
           </div>
-
-          {/* Decorative shapes */}
-          <div className="absolute -top-6 -right-6 w-24 h-24 bg-rose-soft rounded-full opacity-30" />
-          <div className="absolute -bottom-6 -left-6 w-28 h-28 bg-primary-light rounded-full opacity-20" />
         </div>
+
       </div>
     </section>
   )

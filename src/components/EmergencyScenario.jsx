@@ -1,86 +1,111 @@
 import React from "react"
-import { Shield, Zap, Clock, MapPin, Users, AlertCircle } from "lucide-react"
+import { Smartphone, Clock, Radio, Users, PhoneCall, Volume2, ShieldCheck } from "lucide-react"
 
 export default function EmergencyScenario() {
   const workflowSteps = [
     {
-      title: "Phone shake / SOS button",
-      description: "Trigger the emergency workflow",
+      time: "00:00",
+      title: "Trigger SOS Event",
+      description: "Quick tap of the SOS widget or rapid device shake initiates the protocol.",
+      icon: Smartphone,
+      color: "bg-rose-500",
     },
     {
-      title: "3-second safety countdown",
-      description: "Time to cancel if it was accidental",
+      time: "00:03",
+      title: "Accidental Cancel Window",
+      description: "A gentle 3-second haptic countdown allows instant cancel if pressed accidentally.",
+      icon: Clock,
+      color: "bg-amber-500",
     },
     {
-      title: "Emergency mode",
-      description: "Emergency sequence activated",
+      time: "00:04",
+      title: "GPS Lock & Live Tracking",
+      description: "High-accuracy coordinates and battery status generate a live-updating map link.",
+      icon: Radio,
+      color: "bg-purple-600",
     },
     {
-      title: "Location sharing",
-      description: "Your location is shared with guardians",
+      time: "00:05",
+      title: "Guardian Priority Alerts",
+      description: "All selected emergency contacts receive loud SMS & push notifications.",
+      icon: Users,
+      color: "bg-indigo-600",
     },
     {
-      title: "Guardian alert",
-      description: "Your trusted contacts are notified",
+      time: "00:06",
+      title: "Emergency Services Direct",
+      description: "One-touch dial prompt connects to local police or medical emergency line.",
+      icon: PhoneCall,
+      color: "bg-emerald-600",
     },
     {
-      title: "Emergency call",
-      description: "Quick contact with emergency services",
-    },
-    {
-      title: "Loud alarm",
-      description: "Alarm sounds to attract attention",
+      time: "00:07",
+      title: "Deterrent Siren (Optional)",
+      description: "Disorienting high-decibel audible alarm sounds to scare off threats in public.",
+      icon: Volume2,
+      color: "bg-rose-600",
     },
   ]
 
   return (
-    <section className="py-24 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-primary-dark to-charcoal-dark" />
-      <div className="absolute top-0 left-0 right-0 h-96 bg-gradient-to-b from-lavender-light to-transparent" />
+    <section id="safety" className="py-24 relative overflow-hidden bg-slate-900 text-white">
+      {/* Background ambient gradient glow */}
+      <div className="absolute top-0 right-1/4 w-[600px] h-[400px] bg-purple-600/15 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-1/4 w-[600px] h-[400px] bg-pink-600/10 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="relative pt-20">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 text-center">
-            When you need help, keep it simple.
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/20 border border-purple-500/30 text-purple-300 text-xs font-bold uppercase tracking-wider">
+            <ShieldCheck className="w-4 h-4 text-purple-400" />
+            <span>Emergency Protocol Walkthrough</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold font-outfit tracking-tight">
+            When you need help, every second is choreographed.
           </h2>
-
-          <p className="text-lg text-white/70 max-w-2xl mx-auto mb-12 text-center">
-            Our planned emergency workflow ensures help reaches you quickly and safely.
+          <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
+            Here is the automated sequence that protects you from the moment you trigger SOS to safety.
           </p>
+        </div>
 
-          <div className="space-y-4">
-            {workflowSteps.map((step, index) => (
+        {/* Timeline Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {workflowSteps.map((step, index) => {
+            const Icon = step.icon
+            return (
               <div
                 key={index}
-                className="bg-white/20 rounded-2xl p-6 backdrop-blur-sm border border-white/10"
+                className="bg-slate-800/80 backdrop-blur-sm rounded-3xl p-6 border border-slate-700/80 hover:border-purple-500/50 hover:bg-slate-800 transition-all duration-300 group flex flex-col justify-between"
               >
-                <div className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: "rgba(255,255,255,0.1)" }}>
-                  {index < workflowSteps.length - 1 && (
-                    <svg
-                      className="w-6 h-6 text-white/40 rotate-6"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      strokeWidth={2}
-                    >
-                      <path d="M5 12h3M5 18h3M5 6h3" />
-                    </svg>
-                  )}
-                  {index === workflowSteps.length - 1 && (
-                    <Shield className="w-6 h-6 text-white" />
-                  )}
+                <div>
+                  <div className="flex items-center justify-between mb-5">
+                    <div className={`w-11 h-11 rounded-2xl ${step.color} text-white flex items-center justify-center shadow-md group-hover:scale-110 transition-transform`}>
+                      <Icon className="w-5 h-5" />
+                    </div>
+                    <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-full bg-slate-700/60 text-purple-300 border border-purple-400/20">
+                      T + {step.time}
+                    </span>
+                  </div>
+
+                  <h3 className="text-lg font-bold font-outfit text-white mb-2 group-hover:text-purple-300 transition-colors">
+                    {step.title}
+                  </h3>
+
+                  <p className="text-sm text-slate-300 leading-relaxed">
+                    {step.description}
+                  </p>
                 </div>
 
-                <h3 className="text-xl font-medium text-white mb-2">{step.title}</h3>
-
-                <p className="text-sm text-white/60">{step.description}</p>
+                <div className="mt-5 pt-4 border-t border-slate-700/60 flex items-center gap-2 text-xs text-slate-400">
+                  <span className="w-2 h-2 rounded-full bg-purple-400" />
+                  <span>Phase {index + 1} of Protocol</span>
+                </div>
               </div>
-            ))}
-          </div>
+            )
+          })}
+        </div>
 
-          <div className="mt-8 text-sm text-white/50 text-center">
-            <span>Planned emergency workflow</span>
-          </div>
+        <div className="mt-12 text-center text-xs text-slate-400">
+          <span>All protocols run with zero network lag and automatic offline SMS fallback.</span>
         </div>
       </div>
     </section>

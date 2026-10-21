@@ -1,106 +1,217 @@
-import React from "react"
+import React, { useState } from "react"
 import { Link } from "react-router-dom"
-{/* Phone mockup component will be added separately */}
+import { Shield, AlertCircle, Heart, MapPin, Users, PhoneCall, Check, BellRing } from "lucide-react"
 
 export default function Hero() {
+  const [sosActive, setSosActive] = useState(false)
+  const [sosCountdown, setSosCountdown] = useState(null)
+
+  const triggerSosDemo = () => {
+    if (sosActive) {
+      setSosActive(false)
+      setSosCountdown(null)
+      return
+    }
+    setSosCountdown(3)
+    const interval = setInterval(() => {
+      setSosCountdown((prev) => {
+        if (prev === 1) {
+          clearInterval(interval)
+          setSosActive(true)
+          return null
+        }
+        return prev ? prev - 1 : null
+      })
+    }, 800)
+  }
+
   return (
-    <section className="min-h-screen relative overflow-hidden">
-      <div className="absolute inset-0">
-        {/* Decorative gradient background */}
-        <div className="absolute top-0 left-0 right-0 h-96 bg-gradient-to-b from-lavender-light to-white" />
-        <div className="absolute bottom-0 right-0 w-96 bg-gradient-to-l from-rose-soft to-primary-dark" />
-      </div>
+    <section className="relative pt-32 pb-20 lg:pt-36 lg:pb-28 overflow-hidden bg-gradient-to-b from-purple-50/70 via-white to-slate-50">
+      {/* Background ambient lighting */}
+      <div className="absolute top-12 left-1/2 -translate-x-1/2 w-[800px] h-[450px] bg-gradient-to-tr from-purple-200/50 via-pink-100/40 to-transparent rounded-full blur-3xl pointer-events-none -z-10" />
 
-      <div className="max-w-7xl mx-auto px-6 py-24 relative flex flex-col lg:flex-row gap-12 items-center">
-
-        <div className="text-center lg:text-left">
-          <span className="inline-block bg-primary-light text-primary-accent text-sm px-3 py-1 rounded-full mb-6">
-            🛡️ Built for everyday safety
-          </span>
-
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-charcoal-dark leading-tight mb-6">
-            Your safety.<br />
-            <span className="text-primary-accent font-bold">One tap away.</span>
-          </h1>
-
-          <p className="text-lg md:text-xl text-charcoal-dark/70 max-w-xl mb-8">
-            Stay connected to the people you trust. SheSafe brings emergency alerts, trusted guardians, location sharing and rapid SOS assistance together in one simple safety system.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Link to="/register" className="bg-primary text-white px-6 py-3 rounded-full text-lg font-medium hover:bg-primary-accent transition-all inline-block">
-              Get Started
-            </Link>
-            <Link to="#how-it-works" className="border-2 border-charcoal-dark/30 text-primary-default text-lg px-6 py-3 rounded-full hover:border-primary DEFAULT transition-all inline-block">
-              See How It Works
-            </Link>
-          </div>
-
-          <div className="mt-8 flex gap-3 text-sm text-charcoal-dark/60">
-            <span>No complicated setup</span>
-            <span>Private by design</span>
-            <span>Built for emergencies</span>
-          </div>
-        </div>
-
-        <div className="relative lg:w-1/2 flex justify-center">
-          {/* Phone mockup box */}
-          <div className="relative w-80 md:w-96 bg-white rounded-2xl overflow-shadow shadow-lg transform hover:translate-y-2 transition-transform">
-            {/* Screen area */}
-            <div className="relative h-44 bg-gray-100 rounded-t-2xl flex items-center justify-center">
-              <div className="w-full h-full bg-primary-light rounded-t-2xl flex items-center justify-center">
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-primary-accent mb-4">SheSafe</div>
-                  <div className="text-lg text-charcoal-dark/70">You're protected</div>
-                  <div className="text-sm text-charcoal-dark/50">Premium safety status</div>
-                </div>
-              </div>
-
-              {/* Safety indicator */}
-              <div className="absolute -top-2 -right-2 w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
-                <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-
-              {/* Status labels */}
-              <div className="absolute -bottom-2 -right-2 flex gap-2 text-xs">
-                <span className="bg-lavender-light text-primary-default px-2 py-1 rounded">Guardian:</span>
-                <span className="bg-lavender-light text-primary-default px-2 py-1 rounded">Online</span>
-              </div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+          
+          {/* Left Column: Headline and Call-to-actions */}
+          <div className="lg:col-span-7 text-center lg:text-left space-y-6">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-100/80 border border-purple-200 text-purple-900 text-xs font-bold uppercase tracking-wider">
+              <span className="w-2 h-2 rounded-full bg-purple-600 animate-ping" />
+              <span>Next-Gen Women's Safety Network</span>
             </div>
 
-            {/* SOS button */}
-            <div className="absolute bottom-6 left-1/2 -translate-x-1/2">
-              <button
-                className="w-14 h-14 bg-primary DEFAULT rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow"
-                aria-label="Emergency SOS button"
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 font-outfit tracking-tight leading-[1.12]">
+              Your personal safety. <br />
+              <span className="bg-gradient-to-r from-purple-600 via-purple-700 to-pink-600 bg-clip-text text-transparent">
+                Always one tap away.
+              </span>
+            </h1>
+
+            <p className="text-base sm:text-lg text-slate-600 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+              Stay connected to the people you trust. SheSafe brings rapid SOS alerts, encrypted location sharing, and your personal circle of trusted guardians together into one intuitive safety platform.
+            </p>
+
+            {/* Action buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-2">
+              <Link
+                to="/register"
+                className="inline-flex items-center justify-center px-7 py-3.5 rounded-full text-base font-semibold text-white bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 shadow-lg shadow-purple-600/30 hover:shadow-xl hover:shadow-purple-600/40 transition-all transform active:scale-95 cursor-pointer"
               >
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.535 0 2.697-1.242 2.723-2.773L21.723 6.23c-.03-1.535-1.253-2.773-2.733-2.773H9.94c-1.48 0-2.697 1.242-2.733 2.773L5.273 21 c-.03 1.535 1.257 2.773 2.733 2.773zm0 0v-9.5c0-.655.134-1.29.381-1.929l1.55-2.17c.536-.73.886-1.582.886-2.535a4.634 4.634 0 0 0-2.835-3.375H3.134a4.634 4.634 0 0 0-2.835 3.375l1.55 2.17c.246.639.374 1.274.381 1.929v9.5z" />
-                </svg>
-              </button>
+                Set Up Free Protection
+              </Link>
+              <a
+                href="#how-it-works"
+                className="inline-flex items-center justify-center px-7 py-3.5 rounded-full text-base font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-200 shadow-sm hover:border-purple-300 transition-all cursor-pointer"
+              >
+                See How It Works
+              </a>
             </div>
 
-            {/* Guardian cards area */}
-            <div className="absolute top-6 left-6 flex gap-3">
-              {Array.from({ length: 3 }, (_, i) => (
-                <div
-                  key={i}
-                  className="w-10 h-10 bg-lavender-light rounded-full flex items-center justify-center text-xs font-medium"
-                  style={{ color: 'var(--rose-accent)' }}
-                >
-                  {i === 0 && "M"}
-                  {i === 1 && "D"}
-                  {i === 2 && "S"}
-                </div>
-              ))}
+            {/* Trust feature pills */}
+            <div className="pt-4 flex flex-wrap items-center justify-center lg:justify-start gap-y-2 gap-x-6 text-xs font-medium text-slate-500">
+              <div className="flex items-center gap-1.5">
+                <Check className="w-4 h-4 text-emerald-600 stroke-[2.5]" />
+                <span>Zero complicated setup</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <Check className="w-4 h-4 text-emerald-600 stroke-[2.5]" />
+                <span>Encrypted GPS sharing</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <Check className="w-4 h-4 text-emerald-600 stroke-[2.5]" />
+                <span>Instant guardian broadcast</span>
+              </div>
             </div>
           </div>
 
-          {/* Decorative floating shapes */}
-          <div className="absolute -top-6 -right-6 w-16 h-16 bg-rose-soft rounded-full opacity-60 animate-float" />
-          <div className="absolute -bottom-6 -left-6 w-20 h-20 bg-primary-light rounded-full opacity-40" />
+          {/* Right Column: Interactive Phone Mockup */}
+          <div className="lg:col-span-5 flex justify-center">
+            <div className="relative w-full max-w-[340px] sm:max-w-[360px]">
+              
+              {/* Outer Phone Shell */}
+              <div className="relative bg-slate-900 p-4 rounded-[40px] shadow-2xl shadow-purple-950/20 border-4 border-slate-800">
+                
+                {/* Phone Speaker & Camera Notch */}
+                <div className="w-32 h-4 bg-slate-800 rounded-full mx-auto mb-3 flex items-center justify-center">
+                  <div className="w-3 h-3 rounded-full bg-slate-900 border border-slate-700" />
+                </div>
+
+                {/* Screen Content */}
+                <div className="bg-slate-50 rounded-[30px] p-5 overflow-hidden flex flex-col justify-between min-h-[460px] border border-slate-200">
+                  
+                  {/* Top Bar inside app */}
+                  <div>
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center gap-2">
+                        <div className="w-8 h-8 rounded-lg bg-purple-600 flex items-center justify-center text-white">
+                          <Shield className="w-4 h-4" />
+                        </div>
+                        <div>
+                          <p className="text-xs font-bold text-slate-900">SheSafe Mobile</p>
+                          <p className="text-[10px] text-slate-500">Protection Active</p>
+                        </div>
+                      </div>
+                      <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                        sosActive 
+                          ? "bg-rose-100 text-rose-700 animate-pulse" 
+                          : "bg-emerald-100 text-emerald-700"
+                      }`}>
+                        {sosActive ? "EMERGENCY ACTIVE" : "SHIELD ONLINE"}
+                      </span>
+                    </div>
+
+                    {/* Quick Guardian Status Bar */}
+                    <div className="bg-white rounded-2xl p-3 border border-purple-100 shadow-sm mb-4">
+                      <div className="flex items-center justify-between text-xs mb-2">
+                        <span className="font-semibold text-slate-700 flex items-center gap-1">
+                          <Users className="w-3.5 h-3.5 text-purple-600" />
+                          Emergency Circle
+                        </span>
+                        <span className="text-[11px] text-purple-700 font-bold">3 Ready</span>
+                      </div>
+                      <div className="flex -space-x-2">
+                        <div className="w-7 h-7 rounded-full bg-purple-600 text-white text-[11px] font-bold flex items-center justify-center border-2 border-white">M</div>
+                        <div className="w-7 h-7 rounded-full bg-pink-500 text-white text-[11px] font-bold flex items-center justify-center border-2 border-white">D</div>
+                        <div className="w-7 h-7 rounded-full bg-indigo-500 text-white text-[11px] font-bold flex items-center justify-center border-2 border-white">S</div>
+                      </div>
+                    </div>
+
+                    {/* Location Badge */}
+                    <div className="bg-purple-50/80 rounded-xl p-2.5 flex items-center gap-2 text-xs text-slate-700 border border-purple-100">
+                      <MapPin className="w-4 h-4 text-purple-600 flex-shrink-0" />
+                      <span className="truncate text-[11px]">
+                        {sosActive ? "Broadcasting live GPS to contacts..." : "GPS ready for emergency broadcast"}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Big Interactive SOS Trigger in mockup */}
+                  <div className="my-6 text-center">
+                    <button
+                      onClick={triggerSosDemo}
+                      className={`relative w-32 h-32 rounded-full mx-auto flex flex-col items-center justify-center shadow-xl transition-all transform active:scale-95 cursor-pointer ${
+                        sosActive
+                          ? "bg-rose-600 text-white ring-8 ring-rose-200 animate-pulse"
+                          : sosCountdown !== null
+                          ? "bg-amber-500 text-white ring-8 ring-amber-200"
+                          : "bg-gradient-to-tr from-purple-600 via-purple-700 to-pink-600 text-white ring-8 ring-purple-100 hover:ring-purple-200"
+                      }`}
+                    >
+                      {sosCountdown !== null ? (
+                        <>
+                          <span className="text-3xl font-black">{sosCountdown}</span>
+                          <span className="text-[10px] uppercase font-bold tracking-wider">Tap to cancel</span>
+                        </>
+                      ) : sosActive ? (
+                        <>
+                          <BellRing className="w-8 h-8 animate-bounce mb-1" />
+                          <span className="text-sm font-black tracking-wider">ACTIVE</span>
+                          <span className="text-[9px] opacity-90">Tap to stop</span>
+                        </>
+                      ) : (
+                        <>
+                          <AlertCircle className="w-7 h-7 mb-1" />
+                          <span className="text-xl font-black tracking-wider">SOS</span>
+                          <span className="text-[9px] uppercase font-bold tracking-wider opacity-80">Hold / Tap</span>
+                        </>
+                      )}
+                    </button>
+                    <p className="text-[11px] text-slate-500 mt-3 font-medium">
+                      {sosActive
+                        ? "🚨 Emergency triggered in demo mode"
+                        : "Click button to test emergency simulation"}
+                    </p>
+                  </div>
+
+                  {/* Mockup bottom quick actions */}
+                  <div className="grid grid-cols-2 gap-2 text-center">
+                    <div className="bg-white p-2 rounded-xl border border-slate-200 shadow-2xs">
+                      <PhoneCall className="w-3.5 h-3.5 text-emerald-600 mx-auto mb-1" />
+                      <span className="text-[10px] font-bold text-slate-700 block">Speed Dial</span>
+                    </div>
+                    <div className="bg-white p-2 rounded-xl border border-slate-200 shadow-2xs">
+                      <Heart className="w-3.5 h-3.5 text-pink-500 mx-auto mb-1" />
+                      <span className="text-[10px] font-bold text-slate-700 block">Check-In</span>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              {/* Floating decorative badge */}
+              <div className="absolute -bottom-4 -left-6 bg-white/95 backdrop-blur-md px-4 py-2.5 rounded-2xl shadow-xl border border-purple-100 flex items-center gap-3">
+                <div className="w-9 h-9 rounded-xl bg-pink-100 text-pink-600 flex items-center justify-center">
+                  <Heart className="w-5 h-5 fill-pink-500" />
+                </div>
+                <div>
+                  <p className="text-xs font-bold text-slate-800">Designed for Women</p>
+                  <p className="text-[10px] text-slate-500">Empowering everyday safety</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
         </div>
       </div>
     </section>

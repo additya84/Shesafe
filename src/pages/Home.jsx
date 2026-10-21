@@ -11,14 +11,13 @@ import PrivacySection from "../components/PrivacySection"
 import FAQ from "../components/FAQ"
 import CTA from "../components/CTA"
 import Footer from "../components/Footer"
-import { Link } from "react-router-dom"
 
 export default function Home() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-purple-500 selection:text-white flex flex-col">
       <Navbar />
 
-      <main className="pt-20">
+      <main className="flex-grow">
         <Hero />
         <TrustBar />
         <Features />
@@ -29,8 +28,9 @@ export default function Home() {
         <PrivacySection />
         <FAQ />
         <CTA />
-        <Footer />
       </main>
+
+      <Footer />
     </div>
   )
 }

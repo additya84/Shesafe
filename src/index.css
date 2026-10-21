@@ -1,3 +1,35 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-primary-dark: #231238;
+  --color-primary: #7c3aed;
+  --color-primary-DEFAULT: #7c3aed;
+  --color-primary-light: #f5edff;
+  --color-primary-accent: #6d28d9;
+
+  --color-lavender-light: #f5eefd;
+  --color-lavender-DEFAULT: #e9d8fd;
+  --color-lavender-soft: #faf5ff;
+
+  --color-rose-soft: #fce7f3;
+  --color-rose-accent: #ec4899;
+
+  --color-charcoal-dark: #1a1721;
+  --color-charcoal-DEFAULT: #3f3f46;
+
+  --color-gray-very-light: #f8fafc;
+  --color-gray-light: #f1f5f9;
+
+  --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-outfit: "Outfit", system-ui, sans-serif;
+}
+
+:root {
+  --primary-light: #f5edff;
+  --rose-accent: #ec4899;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: var(--font-sans);
+}
